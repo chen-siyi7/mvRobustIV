@@ -19,16 +19,6 @@ candidate causal vector `beta`, every instrument induces a scalar residual
 contrast `Gamma_j - gamma_j' beta` that is asymptotically normal regardless of
 `q`. Tests on these contrasts can be inverted into a region for `beta`.
 
-## Installation
-
-```r
-# install.packages("remotes")
-remotes::install_github("siyichen/mvRobustIV")
-```
-
-The package depends only on base R and the recommended packages `stats`,
-`graphics` and `grDevices`.
-
 ## Quick start
 
 ```r
@@ -90,16 +80,3 @@ can all look healthy while a coordinate is still unbounded.
   package.
 * The method assumes a scalar, linear outcome model, strong instruments, and a
   majority of valid instruments.
-
-## Citation
-
-```r
-citation("mvRobustIV")
-```
-
-Chen, S. (2026). *Uniform inference for multiple causal effects with invalid
-instruments.*
-
-## License
-
-MIT (c) 2026 Siyi Chen.
