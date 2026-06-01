@@ -1,0 +1,78 @@
+---
+title: "Uniform inference for multiple causal effects with invalid instruments"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to mvRobustIV}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 5, fig.height = 4)
+```
+
+```{r setup}
+library(mvRobustIV)
+```
+
+## The problem
+
+In multivariable instrumental-variable and Mendelian randomization analyses we
+want a confidence region for a vector of causal effects `beta`, but some
+instruments may violate the exclusion restriction and we do not know which.
+Methods that first select a valid set and then condition on that choice can
+undercover. `mvRobustIV` instead inverts validity tests on scalar residual
+contrasts under a majority rule, giving a region with coverage at least
+`1 - alpha` uniformly over a class that includes locally invalid instruments.
+
+## A worked example
+
+```{r}
+sim <- simulate_mvmr(q = 2, p = 30, n_valid = 21, seed = 1)
+attr(sim, "true_beta")
+```
+
+First-stage diagnostics tell us whether the region can be bounded:
+
+```{r}
+iv_diagnostics(sim)
+```
+
+The searching region and its coordinate sections:
+
+```{r}
+reg <- searching_region(sim)
+reg
+plot(reg)
+```
+
+Membership testing for any candidate vector:
+
+```{r}
+searching_membership(sim, attr(sim, "true_beta"))$in_region
+searching_membership(sim, c(5, 5))$in_region
+```
+
+## When a coordinate is not identified
+
+If fewer than a majority of instruments are individually strong for an
+exposure, that coordinate is unbounded: the data do not identify it under
+unknown invalidity. The conventional estimate may still look precise, but that
+precision rests on assuming the selected instruments are valid.
+
+```{r}
+sim2 <- sim
+sim2$se_X[6:30, 2] <- sim2$se_X[6:30, 2] * 20   # weaken exposure 2 for most SNPs
+boundedness_rule(sim2)
+suppressWarnings(searching_region(sim2))
+```
+
+## Comparators and refinement
+
+```{r}
+mv_ivw(sim)              # conventional inverse-variance-weighted estimate
+tsht_valid_set(sim)$surplus
+```
+
+`sampling_region()` provides a resampling sensitivity check; the searching
+region remains the default, since it carries the uniform guarantee.

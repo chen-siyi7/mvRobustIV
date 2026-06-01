@@ -1,0 +1,33 @@
+Package: mvRobustIV
+Title: Uniform Inference for Multiple Causal Effects with Invalid Instruments
+Version: 0.1.0
+Authors@R:
+    person("Siyi", "Chen", email = "sche11@lsuhsc.edu", role = c("aut", "cre"))
+Description: Confidence regions for a vector of causal effects in multivariable
+    instrumental-variable and Mendelian randomization analyses when some
+    instruments may be invalid and the valid set is unknown. The package
+    implements the searching confidence region obtained by inverting scalar
+    residual-validity tests under a majority rule, without selecting a valid
+    set, together with first-stage relevance screening, boundedness and
+    strength diagnostics, an iterated hard-thresholding valid-set estimate, and
+    an optional resampling refinement. The searching region has coverage at
+    least 1 - alpha, uniform over a class of data-generating processes that
+    includes locally invalid configurations. Methods follow Chen (2026).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends:
+    R (>= 3.6.0)
+Imports:
+    stats,
+    graphics,
+    grDevices
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+URL: https://github.com/siyichen/mvRobustIV
+BugReports: https://github.com/siyichen/mvRobustIV/issues
+RoxygenNote: 7.3.1
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

@@ -1,0 +1,12 @@
+bibentry(
+  bibtype  = "Unpublished",
+  title    = "Uniform inference for multiple causal effects with invalid instruments",
+  author   = person("Siyi", "Chen"),
+  year     = "2026",
+  note     = "Working paper",
+  textVersion = paste(
+    "Chen, S. (2026).",
+    "Uniform inference for multiple causal effects with invalid instruments.",
+    "Working paper."
+  )
+)
